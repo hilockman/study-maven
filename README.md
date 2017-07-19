@@ -75,3 +75,14 @@ Maven支持传递依赖(transitive dependency)是Maven最强大的特征之一�
 Maven的依赖不仅是一个jar文件，它是一个POM文件，其申明了对其他工程的依赖。
 Maven提供了不同的依赖范围（dependency scopes)。当一个依赖声明为test范围，表示它不能用于Complier插件的compile目标，它将被添加到compiler:testCompiler和surefire:test目标的类路径中。使用provided范围可以把某种依赖排除再WAR文件之外。
 
+8 创建一个用户化的工程
+mvn archetype:generate -DgroupId=org.sonatype.mavenbook.custom -DartifactId=simple-weather -Dversion=1.0
+
+9 获得某个插件的描述
+mvn help:describe -Dplugin=exec -Dfull
+
+10 exec插件可以方面的执行程序，而不用声明类路径
+mvn exec:java -Dexec.mainClass=org.sonatype.mavenbook.weather.Main
+
+11 查看依赖关系
+mvn dependency:resolve
