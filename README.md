@@ -1,4 +1,5 @@
 # study-maven
+http://books.sonatype.com/mvnex-book/reference/index.html
 
 1创建一个简单工程
 mvn archetype:generate -DgroupId=org.sonatype.mavenbook -DartifactId=simple -DpackageName=org.sonatype.mavenbook -Dversion=1.0-SNAPSHOT
@@ -69,6 +70,8 @@ deploy     将最终的包复制到远程的仓库，以让其它开发人员与
 6 Maven仓库即是一个外部仓库的本地缓存，又是本地工程能够相互依赖的机制。
 
 7依赖管理。
-Maven支持传递依赖是Maven最强大的特征之一。
+Maven支持传递依赖(transitive dependency)是Maven最强大的特征之一。
 当安装你的的工程到本地仓库时，Maven发布了一个稍微修改了的工程POM文件到jar包所在目录。存储一个POM文件再仓库中可以给别的工程提供关于次工程的信息，最重要的信息有它所依赖的其他工程。
 Maven的依赖不仅是一个jar文件，它是一个POM文件，其申明了对其他工程的依赖。
+Maven提供了不同的依赖范围（dependency scopes)。当一个依赖声明为test范围，表示它不能用于Complier插件的compile目标，它将被添加到compiler:testCompiler和surefire:test目标的类路径中。使用provided范围可以把某种依赖排除再WAR文件之外。
+
