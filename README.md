@@ -217,3 +217,59 @@ privided范围声明，表示jar包不能包含再WAR内
 wsimport -s src/main/java -p com.bj.znd.weather src/main/resources/WeatherWebService.xml
 运行：
 mvn exec:java -Dexec.mainClass=com.bj.znd.App -Dexec.args="上海" 
+
+15 父子模块
+父工程只是提供一个pom文件，在pom文件中包含子模块，父工程的一些配置将会被所有子模块所继承。父工程pom文件类似如下：
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+                             http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.sonatype.mavenbook.multi</groupId>
+  <version>1.0</version>
+  <artifactId>simple-parent</artifactId>
+  <packaging>pom</packaging>
+  <name>Multi Chapter Simple Parent Project</name>
+ 
+  <modules>
+    <module>simple-weather</module>
+    <module>simple-webapp</module>
+  </modules>
+
+  <build>
+    <pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.5</source>
+          <target>1.5</target>
+        </configuration>
+      </plugin>
+    </plugins>
+    </pluginManagement>
+  </build>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+</project>
+
+子模块通Maven坐标引用父工程的
+<project>
+  [...]
+  <parent>
+    <groupId>org.sonatype.mavenbook.multi</groupId>
+    <artifactId>simple-parent</artifactId>
+    <version>1.0</version>
+  </parent>
+  [...]
+</project>
+
