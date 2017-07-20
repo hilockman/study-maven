@@ -86,3 +86,134 @@ mvn exec:java -Dexec.mainClass=org.sonatype.mavenbook.weather.Main
 
 11 查看依赖关系
 mvn dependency:resolve
+
+12 可通过配置忽略测试失败
+一般情况，Maven遇到一个失败时，构建就会停止。可配置testFailureIgnore属性为true来配置SurefirePlugin，使得即使遇到测试失败，也能继续进行构建
+<project>
+  <build>  
+     <plugins>
+	    <plugin>
+		   <groupId>org.apache.maven.plugins</groupId>
+		   <artifactId>maven-surefire-plugin</artifactId>
+		   <configuration>
+		      <testFailureIgnore>true</testFailureIgnore>
+		   </configuration>
+		</plugin>
+	 </plugins>
+  </build>
+</project>
+同样可通过命令行设置
+mvn test -Dmaven.test.failure.ignore=true
+
+跳过测试的命令行设置：
+mvn install -Dmaven.test.skip=true
+跳过测试POM配置:
+<project>
+  <build>  
+     <plugins>
+	    <plugin>
+		   <groupId>org.apache.maven.plugins</groupId>
+		   <artifactId>maven-surefire-plugin</artifactId>
+		   <configuration>
+		      <skip>true</skip>
+		   </configuration>
+		</plugin>
+	 </plugins>
+  </build>
+</project>
+
+13 通过Maven Assembly 插件自定义应用的发布
+需要再POM中添加Maven Assembly描述
+<project>
+  [...]
+  <build>  
+     <plugins>
+	    <plugin>
+		   <artifactId>maven-assembly-plugin</artifactId>
+		   <configuration>
+		     <descriptorRefs>
+		      <descriptorRef>jar-with-dependencies</descriptorRef>
+			 </descriptorRefs>
+		   </configuration>
+		</plugin>
+	 </plugins>
+  </build>
+  [...]
+</project>
+
+执行组装命令如下：
+mvn install assembly:assembly
+maven执行到install生命周期(lifecycle)后，又执行了assembly:assembly目标(goal)
+
+通过上面的配置生成单一的可执行的jar包
+
+通过把assembly:assembly目标绑定到Maven的package生命周期做法更常规，配置如下：
+<project>
+  [...]
+  <build>  
+     <plugins>
+	    <plugin>
+		   <artifactId>maven-assembly-plugin</artifactId>
+		   <configuration>
+		     <descriptorRefs>
+		      <descriptorRef>jar-with-dependencies</descriptorRef>
+			 </descriptorRefs>
+		   </configuration>
+		   <executions>
+		     <execution>
+			   <id>simple-command</id>
+			   <phase>package</phase>
+			   <goals> 
+			     <goal>attached</goal>
+			   </goals>
+			 </execution>
+		   </executions>
+		</plugin>
+	 </plugins>
+  </build>
+  [...]
+</project>
+
+13 创建一个简单的web工程
+mvn archetype:generate -DgroupId=org.sonatype.mavenbook.simpleweb -DartifactId=simple-webapp -DpackageName=org.sonatype.mavenbook -Dversion=1.0-SNAPSHOT
+选择maven-archetype-webapp，可能1010
+修改编译时依赖的java版本为1.8
+  <build>
+    <finalName>simple-webapp</finalName>
+	<plugins>
+	  <plugin>
+	    <artifactId>maven-compiler-plugin</artifactId>
+		<version>3.3</version>
+		<configuration>
+		  <soure>1.8<soure>
+		  <target>1.8<target>
+		</configuration>
+	  </plugin>
+	</plugins>
+  </build>
+
+通过jetty Servle容器运行web应用
+mvn jetty:run
+注意在window操作系统中，用jetty运行web引用，本地仓库的路径中不能包含空格。工程运行后的url为http://localhost:8080/simple-webapp
+
+添加对Servlet Api的依赖
+<project>
+  [...]
+  <dependencies>
+	<dependency>
+	  <groupId>javax.servlet</groupId>
+	  <artifactId>servlet-api</artifactId>
+	  <version>2.4</version>
+	  <scope>provided</scope>
+	</dependency>
+  </dependencies>
+  [...]
+</project>
+
+privided范围声明，表示jar包不能包含再WAR内
+
+14 生成获取天气的客户端
+生成前先删除WeatherWebService.xml中的ws:import,否则无法生成客户端
+wsimport -s src/main/java -p com.bj.znd.weather src/main/resources/WeatherWebService.xml
+运行：
+mvn exec:java -Dexec.mainClass=com.bj.znd.App -Dexec.args="上海" 
