@@ -273,3 +273,40 @@ mvn exec:java -Dexec.mainClass=com.bj.znd.App -Dexec.args="上海"
   [...]
 </project>
 
+16 创建模板
+mvn archetype:generate -DgroupId=com.znd.plugins \
+-DartifactId=statis-maven-plugin \
+-DpackageName=com.znd.plugins \
+DarchetypeArtifactId=maven-archetype-plugin \
+-Dversion=1.0 
+
+缩短命令行
+有几种方式缩短输入：
+1,如果运行本地仓库安装的最新版插件，可以省略版本号。使用”mvn sample.plugin:hello-Maven-plugin:sayhi”运行。
+2,赋予插件一个短前缀，如mvn hello:sayhi。如果按照${prefix}-maven-plugin的命名方式（如果插件是Apache Maven的官方插件用maven-${prefix}-plugin）这是自动完成的。也可以通过额外的配置设置前缀，更多信息参见Introduction to Plugin Prefix Mapping。
+3,最后，可以把插件的组id加入默认搜索的组id列表。这种方式需要在${user.home}/.m2/settings.xml中增加如下配置：
+<pluginGroups>
+  <pluginGroup>sample.plugin</pluginGroup>
+</pluginGroups>
+此时，可以用”mvn hello:sayhi”运行Mojo了。
+
+将Mojo关联到构建生命周期
+你也可以配置插件关联到构建生命周期某个特定阶段的指定目标，示例如下：
+<build>
+   <plugins>
+     <plugin>
+       <groupId>sample.plugin</groupId>
+       <artifactId>hello-maven-plugin</artifactId>
+       <version>1.0-SNAPSHOT</version>
+       <executions>
+         <execution>
+           <phase>compile</phase>
+           <goals>
+             <goal>sayhi</goal>
+           </goals>
+         </execution>
+       </executions>
+     </plugin>
+   </plugins>
+ </build>
+这样Java代码编译时这个简单Mojo就会执行。更多绑定Mojo到生命周期阶段的信息

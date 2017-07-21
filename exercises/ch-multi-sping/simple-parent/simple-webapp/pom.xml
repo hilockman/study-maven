@@ -22,12 +22,12 @@
     <dependency>
       <groupId>org.sonatype.mavenbook.multispring</groupId>
       <artifactId>simple-weather</artifactId>
-      <version>0.8-SNAPSHOT</version>
+      <version>1.0</version>
     </dependency>
     <dependency>
       <groupId>org.sonatype.mavenbook.multispring</groupId>
       <artifactId>simple-persist</artifactId>
-      <version>0.8-SNAPSHOT</version>
+      <version>1.0</version>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
