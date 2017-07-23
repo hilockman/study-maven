@@ -310,3 +310,105 @@ DarchetypeArtifactId=maven-archetype-plugin \
    </plugins>
  </build>
 这样Java代码编译时这个简单Mojo就会执行。更多绑定Mojo到生命周期阶段的信息
+
+17 优化依赖
+1）把所有的共同依赖添加到依赖管理中(dependencyManagement)
+2) 用内建的工程version和groupId用于引用兄弟工程
+通过dependencyManager声明可以避免依赖复制和子模块依赖不匹配。
+在父工程中申明依赖管理
+<project>
+	...
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring</artifactId>
+				<version>2.0.7</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.velocity</groupId>
+				<artifactId>velocity</artifactId>
+				<version>1.5</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-annotations</artifactId>
+				<version>3.3.0.ga</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-commons-annotations</artifactId>
+				<version>3.3.0.ga</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate</artifactId>
+				<version>3.2.5.ga</version>
+				<exclusions>
+					<exclusion>
+						<groupId>javax.transaction</groupId>
+						<artifactId>jta</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	...
+</project>
+简化后的子工程配置如下。区别为子工程不用申明版本号了
+<project>
+...
+<dependencies>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-annotations</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate</artifactId>
+		</dependency>
+	</dependencies>
+...
+</project>
+在父工程中修复hibernate-annotations和hibernate-commons-annotations的版本重复声明
+<project>
+	...
+	<properties>
+		<hibernate.annotations.version>3.3.0.ga</hibernate.annotations.version>
+	</properties>
+	<dependencyManagement>
+		...
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-annotations</artifactId>
+			<version>${hibernate.annotations.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-commons-annotations</artifactId>
+			<version>${hibernate.annotations.version}</version>
+		</dependency>
+		...
+	</dependencyManagement>
+	...
+</project>
+
+在父工程定义子工程的版本，或者用内建属性保证子版本号一致性：
+<project>
+	...
+	<dependencies>
+		...
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>simple-weather</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>simple-persist</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		...
+	</dependencies>
+	...
+</project>
