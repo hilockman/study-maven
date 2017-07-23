@@ -412,3 +412,50 @@ DarchetypeArtifactId=maven-archetype-plugin \
 	</dependencies>
 	...
 </project>
+
+18 插件管理
+类似于依赖管理，可在父工程中声明插件管理，用来简化字工程的插件声明
+<project>
+...
+<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<configuration>
+						<source>1.5</source>
+						<target>1.5</target>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>hibernate3-maven-plugin</artifactId>
+					<version>2.1</version>
+					<configuration>
+						<components>
+							<component>
+								<name>hbm2ddl</name>
+								<implementation>annotationconfiguration</implementation>
+							</component>
+						</components>
+					</configuration>
+					<dependencies>
+						<dependency>
+							<groupId>hsqldb</groupId>
+							<artifactId>hsqldb</artifactId>
+							<version>${hsqldb.version}</version>
+						</dependency>
+					</dependencies>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+...
+</project>
+
+
+19 由于Maven支持传递依赖，因此最好显示声明工程代码的所有依赖，依赖升级后，传递依赖失效。
+通过dependency插件可以分析使用了的依赖，但未声明的依赖。
+dependency:analyze  分析引用了的未直接声明的依赖
+dependency:tree     列出所有直接和传递依赖
