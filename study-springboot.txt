@@ -1,0 +1,126 @@
+1 通过spring boot的maven插件运行程序
+mvn spring-boot:run
+
+指定操作系统环境变量：
+export MAVEN_OPTS=-Xmx1024m -XX:MaxPermSize=128M
+
+2 指定重启文件
+spring.devtools.restart.trigger-file
+
+多模块项目，可以声明META-INF/spring-devtools.properties文件
+通过restart.exclude.和restart.include.前缀的属性，restart.exclude.对应"restart" classloader,restart.include.对应"基本"classloader.
+
+例如:
+restart.exclude.companycommonlibs=/mycorp-common-[\\w-]+\.jar
+restart.include.projectcommon=/mycorp-myproj-[\\w-]+\.jar
+
+为了能远程调试，需把devtools打包最终的jar包中，配置如下
+<build>
+	<plugins>
+		<plugin>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-maven-plugin</artifactId>
+			<configuration>
+				<excludeDevtools>false</excludeDevtools>
+			</configuration>
+		</plugin>
+	</plugins>
+</build>
+同时需要设置spring.devtools.remote.secret属性
+spring.devtools.remote.secret=mysecret 
+*devtools远程支持存在安全问题，应避免在生产环境中使用
+
+远程应用启动时应开始远程调试，环境参数如下：
+JAVA_OPTS: "-Xdebug -Xrunjdwp:server=y,transport=dt_socket,suspend=n"
+
+通过Internet远程调试可能会很慢，需要增加超时设置,Eclipse的超时设置如下(60000ms满足一般需求）：
+Preferences->Java->Debug
+
+3调试启动应用参数
+$ java -jar myproject-0.0.1-SNAPSHOT.jar --debug
+
+4增加启动标志文件(banner.txt)
+banner.txt必须位于classpath中，或者通过banner.location指定，banner.charset用于指定编码。
+banner.txt中可以增加占位符如${application.version}， ${application.formatted-version}， ${spring-boot.version}，${spring-boot.formatted-version}，${application.title}
+
+当然也可用程序设置标志文件SpringApplication.setBanner(…)。使用org.springframework.boot.Banner，并是实现printBanner()方法。
+
+通过spring.main.banner-mode属性，决定是否输出到控制台，log或off。
+
+4通过setWebEnvironment控制Web环境的创建
+setWebEnvironment(boolean webEnvironment)
+通过setApplicationContextClass(…)可以获得对ApplicationContext的完全控制
+
+5程序输入参数可以通过org.springframework.boot.ApplicationArguments获得
+import org.springframework.boot.*
+import org.springframework.beans.factory.annotation.*
+import org.springframework.stereotype.*
+@Component
+public class MyBean {
+	@Autowired
+	public MyBean(ApplicationArguments args) {
+		boolean debug = args.containsOption("debug");
+		List<String> files = args.getNonOptionArgs();
+		// if run with "--debug logfile.txt" debug=true, files=["logfile.txt"]
+	}
+}
+可通过实现ApplicationRunner和CommandLineRunner，在SpringApplication.run(…)执行前调用操作
+import org.springframework.boot.*
+import org.springframework.stereotype.*
+@Component
+public class MyBean implements CommandLineRunner {
+	public void run(String... args) {
+	// Do something...
+	}
+}
+
+6 可通过org.springframework.boot.ExitCodeGenerator返回退出码
+@SpringBootApplication
+public class ExitCodeApplication {
+	@Bean
+	public ExitCodeGenerator exitCodeGenerator() {
+		return new ExitCodeGenerator() {
+			@Override
+			public int getExitCode() {
+			return 42;
+			}
+		};
+	}
+	public static void main(String[] args) {
+		System.exit(SpringApplication
+		.exit(SpringApplication.run(ExitCodeApplication.class, args)));
+	}
+}
+
+7通过开启spring.application.admin.enabled属性，可以远程管理Spring Boot应用
+
+8 指定application.properties的几种方式
+
+java -Dspring.application.json='{"foo":"bar"}' -jar myapp.jar
+
+java -jar myapp.jar --spring.application.json='{"foo":"bar"}'
+
+注入随机值：
+my.secret=${random.value}
+my.number=${random.int}
+my.bignumber=${random.long}
+my.uuid=${random.uuid}
+my.number.less.than.ten=${random.int(10)}
+my.number.in.range=${random.int[1024,65536]}
+
+SpringApplication会转换任何命令行参数（如--server.port=9000）为属性，并添加到Spring环境中。可以通过SpringApplication.setAddCommandLineProperties(false)关闭此特性。
+
+application.properties文件加载顺序：
+ 1， 当前目录的/config目录
+ 2， 当前目录
+ 3，classpath的/config包
+ 4，classpath的根目录
+ 位置高的配置覆盖位置低的配置
+ 
+如果不想用application.properties作为配置文件名，可通过spring.config.name环境属性更改
+$ java -jar myproject.jar --spring.config.name=myproject
+也可以spring.config.location明确声明配置文件位置
+$ java -jar myproject.jar --spring.config.location=classpath:/default.properties,classpath:/
+override.properties
+
+如果不能用逗号隔开的属性名，可以用下划线的，如用SPRING_CONFIG_NAME代替spring.config.name
