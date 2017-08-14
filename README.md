@@ -459,3 +459,28 @@ DarchetypeArtifactId=maven-archetype-plugin \
 通过dependency插件可以分析使用了的依赖，但未声明的依赖。
 dependency:analyze  分析引用了的未直接声明的依赖
 dependency:tree     列出所有直接和传递依赖
+
+
+20,Maven增加外部jar
+使用springboot插件的条件下
+时system域下声明的jar包能添加到最终的单一jar包内
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<includeSystemScope>true</includeSystemScope>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	
+	依赖生命
+	<dependency>
+		<groupId>com.znd</groupId>
+		<artifactId>com.znd.memdb</artifactId>
+		<version>1.0</version>
+		<scope>system</scope>
+		<systemPath>${project.basedir}/lib/ZhongNDMemDB.jar</systemPath>
+	</dependency>	
