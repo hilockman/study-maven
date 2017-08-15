@@ -484,3 +484,14 @@ dependency:tree     列出所有直接和传递依赖
 		<scope>system</scope>
 		<systemPath>${project.basedir}/lib/ZhongNDMemDB.jar</systemPath>
 	</dependency>	
+	
+	发布jar到一个远程仓库中
+   http://maven.apache.org/guides/mini/guide-3rd-party-jars-remote.html
+   mvn deploy:deploy-file -DgroupId=<group-id> \
+  -DartifactId=<artifact-id> \
+  -Dversion=<version> \
+  -Dpackaging=<type-of-packaging> \
+  -Dfile=<path-to-file> \
+  -DrepositoryId=<id-to-map-on-server-section-of-settings.xml> \
+  -Durl=<url-of-the-repository-to-deploy>
+   

@@ -74,6 +74,10 @@ public class MyBean implements CommandLineRunner {
 	}
 }
 
+
+使用spring-boot插件，指定参数的方法
+mvn spring-boot:run -Drun.arguments="--debug"
+
 6 可通过org.springframework.boot.ExitCodeGenerator返回退出码
 @SpringBootApplication
 public class ExitCodeApplication {
