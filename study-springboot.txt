@@ -128,3 +128,25 @@ $ java -jar myproject.jar --spring.config.location=classpath:/default.properties
 override.properties
 
 如果不能用逗号隔开的属性名，可以用下划线的，如用SPRING_CONFIG_NAME代替spring.config.name
+
+9 属性值能够通过@Value注入
+    @Component
+	public class MyBean {
+		@Value("${name}")
+		private String name;
+		// ...
+	}
+	
+	测试方法：
+	application.properties提供name属性或者
+	java -jar app.jar --name="Spring"
+	java -Dspring.application.json='{"foo":"bar"}' -jar myapp.jar
+	java -jar myapp.jar --spring.application.json='{"foo":"bar"}'
+	
+10 随机值设置方法
+my.secret=${random.value}
+my.number=${random.int}
+my.bignumber=${random.long}
+my.uuid=${random.uuid}
+my.number.less.than.ten=${random.int(10)}
+my.number.in.range=${random.int[1024,65536]}
