@@ -150,3 +150,15 @@ my.bignumber=${random.long}
 my.uuid=${random.uuid}
 my.number.less.than.ten=${random.int(10)}
 my.number.in.range=${random.int[1024,65536]}
+
+MAVEN_OPTS
+-Xms384M -Xmx1024M -XX:MaxPermSize=256M
+
+11 被依赖的jar包不能打包成可执行，不能添加spring-boot-maven-plugin中，也就是说只能在可执行jar包中添加如下依赖
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+
