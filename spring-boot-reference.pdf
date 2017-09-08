@@ -11095,3 +11095,86 @@ trailer
 startxref
 1964775
 %%EOF
+4 0 obj<</Author(Phillip Webb, Dave Syer, Josh Long, StÈphane Nicoll, Rob Winch, Andy Wilkinson, Marcel Overdijk, Christian Dupuis, SÈbastien Deleuze, and Michael Simons)/CreationDate(D:20170727075432Z)/Creator(DocBook XSL Stylesheets with Apache FOP)/ModDate(D:20170818001329+08'00')/PDFVersion(1.4)/Producer(Apache FOP Version 1.1)/Title(Spring Boot Reference Guide)>>endobj7 0 obj<</Length 4123/Subtype/XML/Type/Metadata>>stream
+<?xpacket begin="Ôªø" id="W5M0MpCehiHzreSzNTczkc9d"?>
+<x:xmpmeta xmlns:x="adobe:ns:meta/" x:xmptk="Adobe XMP Core 4.2.1-c041 52.342996, 2008/05/07-20:48:00        ">
+   <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+      <rdf:Description rdf:about=""
+            xmlns:dc="http://purl.org/dc/elements/1.1/">
+         <dc:format>application/pdf</dc:format>
+         <dc:creator>
+            <rdf:Seq>
+               <rdf:li>Phillip Webb, Dave Syer, Josh Long, St√©phane Nicoll, Rob Winch, Andy Wilkinson, Marcel Overdijk, Christian Dupuis, S√©bastien Deleuze, and Michael Simons</rdf:li>
+            </rdf:Seq>
+         </dc:creator>
+         <dc:title>
+            <rdf:Alt>
+               <rdf:li xml:lang="x-default">Spring Boot Reference Guide</rdf:li>
+            </rdf:Alt>
+         </dc:title>
+         <dc:language>
+            <rdf:Bag>
+               <rdf:li>en</rdf:li>
+            </rdf:Bag>
+         </dc:language>
+         <dc:date>
+            <rdf:Seq>
+               <rdf:li>2017-07-27T07:54:32Z</rdf:li>
+            </rdf:Seq>
+         </dc:date>
+      </rdf:Description>
+      <rdf:Description rdf:about=""
+            xmlns:pdf="http://ns.adobe.com/pdf/1.3/">
+         <pdf:Producer>Apache FOP Version 1.1</pdf:Producer>
+         <pdf:PDFVersion>1.4</pdf:PDFVersion>
+      </rdf:Description>
+      <rdf:Description rdf:about=""
+            xmlns:xmp="http://ns.adobe.com/xap/1.0/">
+         <xmp:CreatorTool>DocBook XSL Stylesheets with Apache FOP</xmp:CreatorTool>
+         <xmp:MetadataDate>2017-08-18T00:13:29+08:00</xmp:MetadataDate>
+         <xmp:CreateDate>2017-07-27T07:54:32Z</xmp:CreateDate>
+         <xmp:ModifyDate>2017-08-18T00:13:29+08:00</xmp:ModifyDate>
+      </rdf:Description>
+      <rdf:Description rdf:about=""
+            xmlns:xmpMM="http://ns.adobe.com/xap/1.0/mm/">
+         <xmpMM:DocumentID>uuid:fdff9a9f-ffbb-452c-a1a3-3d936977fb56</xmpMM:DocumentID>
+         <xmpMM:InstanceID>uuid:ad166b7f-4ad7-44ca-b819-2d684f2f6bc4</xmpMM:InstanceID>
+      </rdf:Description>
+   </rdf:RDF>
+</x:xmpmeta>
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                           
+<?xpacket end="w"?>
+endstreamendobj657 0 obj[656 0 R 658 0 R 659 0 R 661 0 R 663 0 R 664 0 R 665 0 R 667 0 R 6136 0 R 6137 0 R 6138 0 R 6139 0 R 6140 0 R 6141 0 R 6142 0 R 6143 0 R]endobjxref
+0 1
+0000000000 65535 f
+4 1
+0001965376 00000 n
+7 1
+0001965755 00000 n
+657 1
+0001969955 00000 n
+trailer
+<</Size 6151/Root 2 0 R/Info 4 0 R/ID[<33B26F88121AF3867B6894C5F4538723><BC2833DB8C2D64458FA3A5C4CA4760AF>]/Prev 1964775>>
+startxref
+1970110
+%%EOF
