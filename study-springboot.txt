@@ -162,3 +162,5 @@ MAVEN_OPTS
 			</plugin>
 		</plugins>
 
+12 读取resources中文件
+    File file = ResourceUtils.getFile("classpath:"+FILE_NAME);

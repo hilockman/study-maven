@@ -193,6 +193,17 @@ mvn archetype:generate -DgroupId=org.sonatype.mavenbook.simpleweb -DartifactId=s
   </build>
 
 通过jetty Servle容器运行web应用
+首先添加Jetty插件
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>maven-jetty-plugin</artifactId>
+				<version>6.1.9</version>
+			</plugin>
+		</plugins>
+	</build>
+	
 mvn jetty:run
 注意在window操作系统中，用jetty运行web引用，本地仓库的路径中不能包含空格。工程运行后的url为http://localhost:8080/simple-webapp
 
